@@ -1,0 +1,92 @@
+from pathlib import Path
+import json
+
+import requests
+
+
+
+OrgCode = ""{{org_code}}"
+DeptName = ""{{dept_name}}"
+
+def request_pdf(url, pdf_file):
+    downloaded, dt_str = False, None
+    try:
+        print(f"Downloading {url}")
+        r = requests.get(url)
+        if r.status_code == 200:
+            with pdf_file.open("wb") as f:
+                f.write(r.content)
+            downloaded = True
+            dt_str = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S %Z%z")
+        else:
+            print(f"An error occurred while downloading {url} Status: {r.status_code}")
+    except Exception as e:
+        print(f"An exception occurred while downloading {url}: {e}")
+
+    time.sleep(2)
+    return downloaded, dt_str
+
+
+def main():
+    all_info_path = Path(sys.argv[1])
+    doc_info_path = Path(sys.argv[2])
+    
+    all_infos = json.loads(all_info_path.read_text())
+    dept_infos = [i for i in all_infos if i['Department Name'] == DeptName]
+
+    doc_infos = json.loads(doc_info_path.read_text())
+    doc_set = set(i['Unique Code'] for i in doc_infos )
+    doc_dir = doc_info_path.parent
+
+    new_infos = [i for i in dept_infos if i['Unique Code'] not in doc_set]
+
+    for info in new_infos:
+        doc_path = doc_dir / f'{info['Unique Code']}.pdf'
+        status, dt_str = request_pdf(info['url'], doc_path)
+        if not status and info['archive']['status']:
+            archive_status, dt_str = request_pdf(info['archive']['url'], doc_path)
+
+        if not archive_status:
+            info['status'] = 'not_downloaded'
+            continue
+
+        tgt_path = link_dir / Path('input') / doc_path.name
+        src_rel_dir = Path.joinpath(['..']* len(tgt_path.parents))
+        src_path = src_rel_dir / doc_path
+
+        tgt_path.symlink_to(src_path)
+
+        
+        
+
+
+        
+
+    
+
+# nofmt: on
+"""
+{
+    "SN": "1",
+    "Department Name": "Co-operation, Textiles and Marketing Department",
+    "Title": "Formation of Draft Committee regarding Gaav tithe Godam Scheme",
+    "Unique Code": "202401151456050502",
+    "G.R. Date": "15-01-2024",
+    "File Size (KB)": "208",
+    "Download": "https://gr.maharashtra.gov.in/Site/Upload/Government%20Resolutions/English/202401151456050502.pdf",
+    "download_dir": "15-Jan-2024_v2",
+    "html_file": "12-Jan-2024_15-Jan-2024-0.html",
+    "download_time_utc": "2024-01-15 09:46:10 UTC+0000",
+    "wayback": {
+      "url": "https://web.archive.org/web/20240122053941/https://gr.maharashtra.gov.in/Site/Upload/Government%20Resolutions/English/202401151456050502.pdf",
+      "sha1": "XA53RLTWGABTPVHOGN4MK5NVVWTRZHT7",
+      "length": "199533",
+      "status": true
+    },
+    "archive": {
+      "url": "http://s3.us.archive.org/in.gov.maharashtra.gr.202401151456050502/202401151456050502.pdf",
+      "identifier": "in.gov.maharashtra.gr.202401151456050502",
+      "status": true
+    }
+
+"""
