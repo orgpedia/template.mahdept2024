@@ -3,7 +3,7 @@ from pathlib import Path
 
 import docint  # noqa
 import orgpedia  # noqa
-
+import word_recognizer  # noqa
 
 def order_num(pdf_path):
     org_code, num = pdf_path.stem.rsplit("-", 1)
@@ -27,6 +27,7 @@ if __name__ == "__main__":
         for doc in docs:
             output_doc_path = output_path / (doc.pdf_name + ".doc.json")
             doc.to_disk(output_doc_path)
+        print(f'#docs: {viz.total_docs} #processed: {viz.total_docs - viz.unprocessed_docs}')            
     elif input_path.suffix.lower() == ".pdf":
         doc = viz(input_path)
         doc.to_disk(output_path)

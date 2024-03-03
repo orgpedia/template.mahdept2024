@@ -142,28 +142,13 @@ dmypy.json
 .secrets
 model
 
+# don't add this file as we want to fetch it every time
+import/documents/all_infos.json
+
 # Don't upload following folders
-/import/websites/
-/import/models/*
-!/import/models/ai4bharat/IndicTrans2-en/README.md
-!/import/models/models.yml
-
-
-/import/docker
-/import/data_packages/*
-!/import/data_packages/data_packages.yml
-
-/export/page_images
-/export/html
-#/export/orgpedia_{{org_code}} # checkin as poetry complains
-
-# Don't add output, but add ocr.json.gz
-
 /flow/writeTxt_/output/*
-!/flow/writeTxt_/output/*.ocr.json.gz
-!/flow/writeTxt_/output/*.en.txt
-!/flow/writeTxt_/output/*.mr.txt
-!/flow/writeTxt_/output/doc_translations_todo.json
+
+!/flow/writeTxt_/output/*.doc.json
 
 # Don't store poetry.lock for new
 poetry.lock

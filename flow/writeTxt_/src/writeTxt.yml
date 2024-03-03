@@ -1,28 +1,19 @@
-description: This folder(task) runs the OCR extracts tables and paragraphs, translates them and writes as a text file.
+description: This folder(task) runs the cid extractor, extracts tables and paragraphs, translates them and writes as a text file.
 
 ignore_docs: [ ]
-
-#docker_pipes: [ 'doc_translator_a4b']
 
 output_dir: 'output'
 config_dir: 'conf'
 output_stub: 'doc'
 
-
 pipeline:
+  - name: pdf_cid_info
 
-  - name: gcv_recognizer2
+  - name: pdf_cid_reader
     config:
-      bucket: opfi
-      compress_output: True
+        swap_cids: [['sakalmarathi', 66, 126]] # u and dot (mumbai)
 
-  - name: orient_pages
-    config:
-      min_word_len: 4
-
-  # - name: page_image_builder_embedded
-  #   config:
-  #     image_dir: /export/page_images
+  - name: word_recognizer
 
   - name: pdftable_finder
     config:
@@ -39,24 +30,14 @@ pipeline:
       quick: True
       newline_height_multiple: 1.6
 
-  # - name: html_generator
-  #   config:
-  #     html_root: output/html
-  #     color_dict:
-  #       table:
-  #         row1: red
-  #         row2: yellow
-  #       table_edges: green
-  #       word: blue
-
   - name: para_finder
     config:
       write_output: False
 
-  - name: doc_translator_a4b
+  - name: extract_order_number      
+
+  - name: doc_translator_hf
     config:
-      mode: todo      
-      write_output: False
       src_lang: 'mar_Deva'
       tgt_lang: 'eng_Latn'
 

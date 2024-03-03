@@ -30,30 +30,25 @@ include = [ "export/orgpedia_{{org_code}}/*" ]
 "data issues" = "https://github.com/orgpedia/{{org_code}}/discussions"
 
 [tool.poetry.dependencies]
-python = ">3.8.1"
+python = ">3.8.1 <4.0"
 
 # this is a datapackage should not have any dependency as we are publishing data
 # dependencies for running the flow are in group.dev.dependencies
+
 
 [tool.poetry.group.dev]
 optional = true
 
 [tool.poetry.group.dev.dependencies]
-docint = { git = "https://github.com/mukundesh/docint.git" }
 pdfplumber = "^0.9.0"
+requests = "^2.31.0"
+pytesseract = "^0.3.10"
 
-ruff = "^0.0.243"
-pre-commit = "^2.21.0" # version compatible with 3.8
-
-[tool.poetry.group.translate]
-optional = true
-
-[tool.poetry.group.translate.dependencies]
-docint = { git = "https://github.com/mukundesh/docint.git" }
-
-indic-nlp-library = {git = "https://github.com/orgpedia/indic_nlp_library-deva.git"}
-ctranslate2 = "^3.22.0"
-sentencepiece = "^0.1.99"
+docint = {git = "https://github.com/mukundesh/docInt.git"}
+ruff = "^0.2.2"
+pre-commit = "^2.21.0" 
+translateindic = {git = "https://github.com/orgpedia/translateIndic"}
+orgpedia = {git = "https://github.com/orgpedia/orgpedia.git"}
 
 [build-system]
 requires = ["poetry-core"]
@@ -61,12 +56,12 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.ruff]
 # Enable Pyflakes `E` and `F` codes by default.
-select = ["E", "F", "W", "I001"]
-ignore = []
+lint.select = ["E", "F", "W", "I001"]
+lint.ignore = []
 
 # Allow autofix for all enabled rules (when `--fix`) is provided.
-fixable = ["I001"] # fix only isort issues
-unfixable = []
+lint.fixable = ["I001"] # fix only isort issues
+lint.unfixable = []
 
 # Exclude a variety of commonly ignored directories.
 exclude = [
@@ -92,7 +87,7 @@ exclude = [
     "page_images",
     "html",
 ]
-per-file-ignores = {}
+lint.per-file-ignores = {}
 
 # Same as Black.
 line-length = 100
