@@ -49,7 +49,7 @@ format:
 	poetry run ruff format .
 
 export: 
-	poetry run python flow/src/export.py import/documents flow/writeTxt_ export/orgpedia_mahagri2024
+	poetry run python flow/src/export.py import/documents flow/writeTxt_ export/orgpedia_{{ org_code }}
 
 
 # Use pre-commit if there are lots of edits,

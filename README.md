@@ -1,4 +1,4 @@
-# Template: template.mahdept
+# Template: template.mahdept2024
 
 This a template for creating datapackage repositories for Government of Maharashtra for orders/GRs found at https://gr.maharashtra.gov.in/1145/Government-Resolutions. If you are looking for a generic datapackage template then visit http://github.com/orgpedia/template.datapackage.
 
@@ -15,7 +15,7 @@ You need to have [copier](https://pypi.org/project/copier/) package installed to
 
 3. populate <org_code> directory using this template by running the command. 
 
-    ```copier https://github.com/orgpedia/template.mahdept.git path/to/<org_code>```
+    ```copier copy https://github.com/orgpedia/template.mahdept2024.git path/to/<org_code>```
 
 4. commit the changes in the git repository.
 
