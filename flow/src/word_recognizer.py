@@ -16,7 +16,7 @@ def add_text_from_word_image(page_image, word, lang_str):
     return word.text_
 
 
-TessCutoff = 25  # Number of unmatched words for it to use recognizer
+TessCutoff = 10  # Number of unmatched words for it to use recognizer
 
 
 @Vision.factory(
