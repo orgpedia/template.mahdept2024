@@ -1,4 +1,4 @@
-name: getGR
+name: translateGR
 
 on:
   schedule:
