@@ -31,8 +31,8 @@ for info in new_infos:
         json_doc = json.loads(doc_file.read_text())
         order_number_dict = json_doc.get('order_number', None)
         
-        shutil.copyfile(en_file, export_dir / mr_file.name)
-        shutil.copyfile(mr_file, export_dir / en_file.name)
+        shutil.copyfile(en_file, export_dir / en_file.name)
+        shutil.copyfile(mr_file, export_dir / mr_file.name)
         
         info["mr_file"] = mr_file.name
         info["en_file"] = en_file.name
