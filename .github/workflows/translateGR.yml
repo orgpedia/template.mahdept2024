@@ -39,6 +39,9 @@ jobs:
         run: make import
 
       - name: Extract, translate
+        env:
+          HF_TOKEN: ${{ secrets.HF_READ_TOKEN }}
+
         run: make flow
 
       - name: Export
